@@ -53,6 +53,13 @@
       -else
         = f.submit 'Save changes', class: "btn-save btn"
 
+      %a.choose-btn.btn.btn-small.js-choose-issue-attachment-button
+        %i.icon-paper-clip
+        %span Choose File ...
+      &nbsp;
+      %span.file_name.js-attachment-filename File name...
+      = f.file_field :attachment, class: "js-issue-attachment-input hide"
+
       - cancel_path = @issue.new_record? ? project_issues_path(@project) : project_issue_path(@project, @issue)
       = link_to "Cancel", cancel_path, class: 'btn btn-cancel'
 
@@ -92,4 +99,19 @@
   $('.assign-to-me-link').on('click', function(e){
     $('#issue_assignee_id').val("#{current_user.id}").trigger("chosen:updated");
     e.preventDefault();
+  });
+
+  $('.js-choose-issue-attachment-button').on('click', function(e){
+    var form = $(this).closest('form');
+
+    form.find('.js-issue-attachment-input').click();
+  });
+
+  $('.js-issue-attachment-input').on('change', function() {
+    var form = $(this).closest("form");
+
+    // get only the basename
+    var filename = $(this).val().replace(/^.*[\\\/]/, '');
+
+    form.find(".js-attachment-filename").text(filename);
   });
