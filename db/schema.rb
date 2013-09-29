@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20130926081215) do
+ActiveRecord::Schema.define(:version => 20130929130015) do
 
   create_table "deploy_keys_projects", :force => true do |t|
     t.integer  "deploy_key_id", :null => false
@@ -63,6 +63,7 @@ ActiveRecord::Schema.define(:version => 20130926081215) do
     t.integer  "milestone_id"
     t.string   "state"
     t.integer  "iid"
+    t.string   "attachment"
   end
 
   add_index "issues", ["assignee_id"], :name => "index_issues_on_assignee_id"

@@ -83,6 +83,16 @@ class Projects::IssuesController < Projects::ApplicationController
     end
   end
 
+  def delete_attachment
+    @issue = @project.issues.find_by_iid!(params[:id])
+    @issue.remove_attachment!
+    @issue.update_attribute(:attachment, nil)
+
+    respond_to do |format|
+      format.js { render nothing: true }
+    end
+  end
+
   def bulk_update
     result = Issues::BulkUpdateContext.new(project, current_user, params).execute
     redirect_to :back, notice: "#{result[:count]} issues updated"
