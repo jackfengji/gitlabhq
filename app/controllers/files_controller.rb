@@ -1,7 +1,12 @@
 class FilesController < ApplicationController
   def download
-    note = Note.find(params[:id])
-    uploader = note.attachment
+    if params[:type] == 'issue'
+      note = Issue.find(params[:id])
+      uploader = note.attachment
+    else
+      note = Note.find(params[:id])
+      uploader = note.attachment
+    end
 
     if uploader.file_storage?
       if can?(current_user, :read_project, note.project)
